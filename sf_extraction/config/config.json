@@ -1,0 +1,42 @@
+{
+  "browser": {
+    "executablePath": "/usr/bin/google-chrome",
+    "headless": false,
+    "userDataDir": ".browser-profile",
+    "viewport": { "width": 1440, "height": 900 },
+    "timeoutMs": 60000,
+    "manualSignInTimeoutMs": 300000
+  },
+
+  "loginTools": {
+    "openBeforeSalesforce": true,
+    "url": "https://login-tools.ops.papernest.com/",
+    "credentialsEnv": { "username": "LOGIN_TOOLS_EMAIL", "password": "LOGIN_TOOLS_PASSWORD" },
+    "selectors": {
+      "username": "#username",
+      "password": "#password",
+      "submit": "button[type=submit]"
+    },
+    "code": {
+      "pagePath": "/2fas/",
+      "apiPath": "/api/2fas/",
+      "tokenName": "Salesforce 2FA NCC Tunis TL",
+      "minSecondsRemaining": 5
+    }
+  },
+
+  "salesforce": {
+    "loginUrl": "https://papernest.my.salesforce.com/",
+    "appUrl": "https://papernest.lightning.force.com",
+    "credentialsEnv": { "username": "SF_USERNAME", "password": "SF_PASSWORD" },
+    "selectors": {
+      "username": "#username",
+      "password": "#password",
+      "submit": "#Login",
+      "verificationInput": "#emc, input[name=emc], #tc",
+      "verificationSubmit": "#save"
+    }
+  },
+
+  "outputDir": "output"
+}

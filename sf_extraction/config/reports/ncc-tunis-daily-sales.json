@@ -1,0 +1,36 @@
+{
+  "name": "ncc-tunis-daily-sales",
+  "description": "Rapport journée MyOpla — today's sales for NCC Tunis (Box, Mobile, Cybersécurité). 'Me montrer = Toutes les opportunités' and 'Date de création = Aujourd'hui' are saved in the report itself.",
+  "reportId": "00OAM000000L2D32AK",
+  "filters": [
+    {
+      "index": 0,
+      "label": "Equipe",
+      "values": [
+        "Supervision_France",
+        "Conquest"
+      ]
+    },
+    {
+      "index": 1,
+      "label": "Type d'enregistrement de l'opportunité",
+      "values": [
+        "France : Opportunité Box",
+        "France : Opportunité Mobile",
+        "France : Opportunité Cybersécurité"
+      ]
+    },
+    {
+      "index": 2,
+      "label": "Site d'affectation",
+      "values": [
+        "NCC - Tunis"
+      ]
+    }
+  ],
+  "idColumn": {
+    "column": "OPPORTUNITY_NAME",
+    "header": "Opportunity Id"
+  },
+  "columns": []
+}

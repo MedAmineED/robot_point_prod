@@ -1,0 +1,16 @@
+{
+  "name": "@sales-automation/shared",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser, logging, credentials and output helpers shared by the extractors",
+  "type": "module",
+  "exports": {
+    "./browser": "./browser.js",
+    "./env": "./env.js",
+    "./log": "./log.js",
+    "./output": "./output.js"
+  },
+  "dependencies": {
+    "puppeteer-core": "^23.11.1"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "point-prod-robot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Runs the extractors and sends their data to the Point Prod API",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env src/index.js",
+    "push": "node --env-file=.env src/index.js --skip-extract",
+    "schedule": "node --env-file=.env src/index.js --schedule",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@sales-automation/shared": "1.0.0"
+  }
+}

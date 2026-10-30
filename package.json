@@ -1,0 +1,20 @@
+{
+  "name": "robot-point-prod",
+  "private": true,
+  "description": "Point Prod robot: extracts Salesforce sales and Diabolocom leads, then sends them to the Point Prod API",
+  "workspaces": [
+    "shared",
+    "sf_extraction",
+    "diabolocom_extraction",
+    "robot"
+  ],
+  "scripts": {
+    "extract": "npm --prefix sf_extraction start",
+    "extract:diabolocom": "npm --prefix diabolocom_extraction start",
+    "extract:all": "npm run extract && npm run extract:diabolocom",
+    "robot": "npm --prefix robot start",
+    "robot:push": "npm --prefix robot run push",
+    "robot:schedule": "npm --prefix robot run schedule",
+    "test": "npm test --workspaces --if-present"
+  }
+}

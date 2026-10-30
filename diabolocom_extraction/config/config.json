@@ -1,0 +1,26 @@
+{
+  "browser": {
+    "executablePath": "/usr/bin/google-chrome",
+    "headless": false,
+    "userDataDir": ".browser-profile",
+    "viewport": { "width": 1440, "height": 900 },
+    "timeoutMs": 60000,
+    "manualSignInTimeoutMs": 300000
+  },
+
+  "diabolocom": {
+    "baseUrl": "https://fr10.engage.diabolocom.com",
+    "loginPath": "/app/login",
+    "homePath": "/app/",
+    "credentialsEnv": { "username": "DIABOLOCOM_USERNAME", "password": "DIABOLOCOM_PASSWORD" },
+    "selectors": {
+      "username": "#login",
+      "password": "#password",
+      "submit": "button[type=submit]"
+    },
+    "groupsApiPath": "/api/account/groups/list",
+    "timeZone": "Africa/Tunis"
+  },
+
+  "outputDir": "output"
+}
