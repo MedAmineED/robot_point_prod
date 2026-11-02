@@ -94,7 +94,11 @@ async function runJob(config, job, { skipExtract, trigger }) {
     await api(config, 'POST', `/ingest/runs/${runId}/fail`, { message: 'Toutes les sources ont échoué', sources: payload.sources });
     throw new Error(`job ${job.activity}: every source failed (run #${runId})`);
   }
-  const result = await api(config, 'POST', '/ingest', payload);
+  const result = await api(config, 'POST', '/ingest', payload).catch(async (err) => {
+    // The data did not get through: close the run so that the failure is reported by email.
+    await api(config, 'POST', `/ingest/runs/${runId}/fail`, { message: `Envoi des données impossible : ${err.message}`, sources: payload.sources }).catch(() => {});
+    throw err;
+  });
   log.info(
     `job ${job.activity}: run #${result.runId} ${result.status}: ${result.salesInserted} new sales / ${result.salesReceived}, ` +
       `${result.leadsReceived} lead rows, ${result.agentsCreated} new agents`,
