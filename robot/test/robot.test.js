@@ -25,6 +25,14 @@ test('leads mapping converts counts to numbers', () => {
   ]);
 });
 
+test('kpis mapping keeps a real zero and a missing value apart', () => {
+  const fields = { key: 'KPI', value: 'Value', date: 'Date' };
+  assert.deepEqual(mapRecords('kpis', [{ KPI: 'TR', Value: 0, Date: '2026-11-02' }, { KPI: 'TR', Value: null, Date: '2026-11-02' }], fields), [
+    { key: 'TR', value: 0, date: '2026-11-02' },
+    { key: 'TR', value: null, date: '2026-11-02' },
+  ]);
+});
+
 test('schedule slots every 2 hours from 10:00 to 20:00, next slot computed in the time zone', () => {
   const schedule = { from: '10:00', to: '20:00', everyMinutes: 120, timeZone: 'Africa/Tunis' };
   assert.deepEqual(slots(schedule), [600, 720, 840, 960, 1080, 1200]);

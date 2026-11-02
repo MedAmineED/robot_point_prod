@@ -41,6 +41,17 @@
             "leads": "Inbound calls",
             "date": "Date"
           }
+        },
+        {
+          "name": "grafana",
+          "kind": "kpis",
+          "workspace": "grafana_extraction",
+          "report": "conquest-box-tr",
+          "fields": {
+            "key": "KPI",
+            "value": "Value",
+            "date": "Date"
+          }
         }
       ]
     }

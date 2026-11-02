@@ -39,5 +39,9 @@ export function mapRecords(kind, records, fields) {
   if (kind === 'leads') {
     return records.map(item).map((l) => ({ agentEmail: text(l.agentEmail), leads: Number(l.leads) || 0, date: toIsoDay(l.date) }));
   }
-  throw new Error(`Unknown source kind "${kind}" (expected sales or leads)`);
+  if (kind === 'kpis') {
+    // A null value is meaningful: the source has no data right now.
+    return records.map(item).map((k) => ({ key: text(k.key), value: k.value === undefined ? null : Number(k.value), date: toIsoDay(k.date) }));
+  }
+  throw new Error(`Unknown source kind "${kind}" (expected sales, leads or kpis)`);
 }

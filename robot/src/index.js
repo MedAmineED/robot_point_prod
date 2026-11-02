@@ -72,7 +72,7 @@ async function runJob(config, job, { skipExtract, trigger }) {
   log.info(`job ${job.activity}: start (${trigger}${skipExtract ? ', existing files' : ''})`);
   const { runId } = await api(config, 'POST', '/ingest/runs', { activity: job.activity, trigger, host: os.hostname() });
 
-  const payload = { activity: job.activity, team: job.team, runId, sources: [], sales: [], leads: [] };
+  const payload = { activity: job.activity, team: job.team, runId, sources: [], sales: [], leads: [], kpis: [] };
   for (const source of job.sources) {
     const started = Date.now();
     try {

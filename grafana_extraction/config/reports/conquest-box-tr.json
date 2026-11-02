@@ -1,0 +1,10 @@
+{
+  "name": "conquest-box-tr",
+  "description": "BPO - Live TR prospect > INBOUND + Conquest France - NCC Tunis: TR Ops of the Conquest Box row (Global). The value panel reads the hidden table panel 152 (TR_Global).",
+  "kpi": "TR_GRAFANA",
+  "dashboardUid": "b53de01c-a743-46a7-8517-f4f5730c998f",
+  "panelId": 152,
+  "variables": { "Country_letters": "France" },
+  "match": { "field": "activity", "value": "Conquest Box" },
+  "valueField": "tr_ops"
+}

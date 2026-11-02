@@ -4,7 +4,8 @@ Extracts the day's data and sends it to the Point Prod API (`POST /api/ingest`, 
 
 ```
 robot ──runs──> sf_extraction          (Salesforce sales, report "Rapport journée MyOpla")
-          └───> diabolocom_extraction  (Diabolocom leads = inbound calls)
+          ├───> diabolocom_extraction  (Diabolocom leads = inbound calls)
+          └───> grafana_extraction     (Grafana KPI: TR_GRAFANA = TR Ops of Conquest Box)
       ──sends──> https://point-prod.nrjcallcenter.com/api
 ```
 
@@ -13,6 +14,7 @@ robot ──runs──> sf_extraction          (Salesforce sales, report "Rappor
 | `robot/` | Runs the extractors, maps their output (`config/robot.json`) and sends it to the API |
 | `sf_extraction/` | Puppeteer Salesforce extractor (2FA code read from login-tools) |
 | `diabolocom_extraction/` | Puppeteer Diabolocom extractor (agent productivity) |
+| `grafana_extraction/` | Puppeteer Grafana extractor: runs the panel's own query and reads one value |
 | `shared/` | Browser, logging, credentials and output helpers |
 
 ## Setup
@@ -40,6 +42,7 @@ The first run opens Chrome; sign in if asked. Sessions are kept in each extracto
 - `robot/config/robot.json`: schedule, jobs, field mapping
 - `sf_extraction/config/reports/*.json`: Salesforce report id and filters
 - `diabolocom_extraction/config/reports/*.json`: Diabolocom groups, period, columns
+- `grafana_extraction/config/reports/*.json`: Grafana dashboard, panel and row of each KPI
 - `*/config/config.json`: `"headless": true` to run without a visible window
 
 Secrets only go in `.env` files, which are ignored by git.

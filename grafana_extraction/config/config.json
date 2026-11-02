@@ -1,0 +1,24 @@
+{
+  "browser": {
+    "executablePath": "/usr/bin/google-chrome",
+    "headless": false,
+    "userDataDir": ".browser-profile",
+    "viewport": { "width": 1440, "height": 900 },
+    "timeoutMs": 60000,
+    "manualSignInTimeoutMs": 300000
+  },
+
+  "grafana": {
+    "baseUrl": "https://data-live-dashboarding.bi.papernest.com:3000",
+    "loginPath": "/login",
+    "credentialsEnv": { "username": "GRAFANA_USERNAME", "password": "GRAFANA_PASSWORD" },
+    "selectors": {
+      "username": "input[name=user]",
+      "password": "input[name=password]",
+      "submit": "button[type=submit]"
+    },
+    "timeZone": "Africa/Tunis"
+  },
+
+  "outputDir": "output"
+}
