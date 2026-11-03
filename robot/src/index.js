@@ -1,12 +1,10 @@
-import { spawn } from 'node:child_process';
 import { readdir, readFile, stat } from 'node:fs/promises';
-import { existsSync, readFileSync } from 'node:fs';
-import { parseEnv } from 'node:util';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { log } from '@sales-automation/shared/log';
+import { runExtractor } from './extractor.js';
 import { mapRecords } from './mapping.js';
 import { msUntilNextSlot, slots } from './schedule.js';
 
@@ -34,30 +32,6 @@ async function api(config, method, route, body) {
   return text ? JSON.parse(text) : null;
 }
 
-function runExtractor(source) {
-  return new Promise((resolve) => {
-    const tail = [];
-    // The robot's environment (robot/.env) is passed to the extractor; the extractor's own .env
-    // only fills what the robot does not set.
-    const cwd = path.join(PROJECT_ROOT, source.workspace);
-    const own = path.join(cwd, '.env');
-    const env = { ...(existsSync(own) ? parseEnv(readFileSync(own, 'utf8')) : {}), ...process.env };
-    const child = spawn(process.execPath, ['src/index.js', '--report', source.report], { cwd, env, stdio: ['ignore', 'pipe', 'pipe'] });
-    const forward = (stream, out) =>
-      stream.on('data', (chunk) => {
-        out.write(chunk);
-        tail.push(...chunk.toString().split('\n').filter(Boolean));
-        tail.splice(0, Math.max(0, tail.length - 20));
-      });
-    forward(child.stdout, process.stdout);
-    forward(child.stderr, process.stderr);
-    child.on('close', (code) => {
-      const error = tail.filter((l) => /ERROR/.test(l)).at(-1) ?? tail.at(-1) ?? `exit code ${code}`;
-      resolve(code === 0 ? null : error.replace(/^\[[\d:]+\]\s*/, ''));
-    });
-  });
-}
-
 // Latest output file written by the extractor (and, after an extraction, written during this run).
 async function latestOutput(source, notBefore) {
   const dir = path.join(PROJECT_ROOT, source.workspace, 'output', source.report);
@@ -77,7 +51,7 @@ async function runJob(config, job, { skipExtract, trigger }) {
     const started = Date.now();
     try {
       if (!skipExtract) {
-        const error = await runExtractor(source);
+        const error = await runExtractor(source, { root: PROJECT_ROOT, timeoutMs: config.extractorTimeoutMinutes * 60_000 });
         if (error) throw new Error(error);
       }
       const output = await latestOutput(source, skipExtract ? null : started);

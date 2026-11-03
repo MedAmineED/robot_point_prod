@@ -33,7 +33,7 @@ export async function loginGrafana(browser, config) {
     try {
       await waitForManualSignIn(page, isSignedIn, browser.defaultTimeoutMs);
     } catch {
-      log.warn('grafana: sign-in not completed (wrong credentials?), finish it in the browser window...');
+      if (browser.manualSignInTimeoutMs) log.warn('grafana: sign-in not completed (wrong credentials?), finish it in the browser window...');
       await waitForManualSignIn(page, isSignedIn, browser.manualSignInTimeoutMs);
     }
   } else {

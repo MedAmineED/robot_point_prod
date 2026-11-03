@@ -33,7 +33,7 @@ export async function loginDiabolocom(browser, config) {
       await waitForManualSignIn(page, isSignedIn, browser.defaultTimeoutMs);
     } catch {
       // Usually a reCAPTCHA challenge or wrong credentials: let a person finish in the window.
-      log.warn('diabolocom: sign-in not completed (reCAPTCHA or wrong credentials?), finish it in the browser window...');
+      if (browser.manualSignInTimeoutMs) log.warn('diabolocom: sign-in not completed (reCAPTCHA or wrong credentials?), finish it in the browser window...');
       await waitForManualSignIn(page, isSignedIn, browser.manualSignInTimeoutMs);
     }
   } else {

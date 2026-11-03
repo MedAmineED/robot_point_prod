@@ -1,6 +1,7 @@
 {
   "apiUrl": "http://localhost:4100/api",
   "apiKeyEnv": "ROBOT_API_KEY",
+  "extractorTimeoutMinutes": 10,
 
   "schedule": {
     "everyMinutes": 120,

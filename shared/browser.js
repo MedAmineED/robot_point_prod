@@ -15,7 +15,8 @@ export async function launchBrowser(browserConfig, rootDir) {
     args: ['--lang=fr-FR', '--hide-crash-restore-bubble', '--no-first-run', '--no-default-browser-check'],
   });
   browser.defaultTimeoutMs = browserConfig.timeoutMs;
-  browser.manualSignInTimeoutMs = browserConfig.manualSignInTimeoutMs;
+  // Under the robot nobody is at the window: a failed sign-in must be reported, not waited on.
+  browser.manualSignInTimeoutMs = process.env.ROBOT_UNATTENDED ? 0 : browserConfig.manualSignInTimeoutMs;
   return browser;
 }
 
@@ -39,6 +40,9 @@ export async function closeBrowser(browser) {
 
 // Polls until isSignedIn() is true; survives the navigations a sign-in causes.
 export async function waitForManualSignIn(page, isSignedIn, timeoutMs) {
+  if (timeoutMs === 0) {
+    throw new Error(`Sign-in failed (wrong or missing credentials, or a check such as reCAPTCHA) and nobody is at the browser window (stopped at ${page.url()})`);
+  }
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     if (await isSignedIn().catch(() => false)) return;

@@ -4,7 +4,7 @@ Extracts Diabolocom statistics reports (for example *Statistics reports → Agen
 
 ## How it works
 
-1. Opens Diabolocom and reuses the saved session in `.browser-profile/` when it's still valid; otherwise it signs in with `.env`. If reCAPTCHA blocks the sign-in, it waits for you to finish it in the window.
+1. Opens Diabolocom and reuses the saved session in `.browser-profile/` when it's still valid; otherwise it signs in with `.env`. If reCAPTCHA blocks the sign-in, it waits for you to finish it in the window; under the robot, which nobody is watching, it fails at once instead.
 2. Looks up the configured group names (for example `FR_NCC_Box_Conquest`) to get their IDs.
 3. Sends the same request the report page sends when you set its filters (`POST /api/statistic-cold/report/...`), so it doesn't click through the screen or read the table.
 4. Writes `output/<report>/<timestamp>.json` and `.csv`, with a `Date` column for the day.

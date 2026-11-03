@@ -35,7 +35,7 @@ npm run robot:schedule   # keep running: every 2 h from 10:00 to 20:00 (robot/co
 npm test
 ```
 
-The first run opens Chrome; sign in if asked. Sessions are kept in each extractor's `.browser-profile/` (never committed).
+Sessions are kept in each extractor's `.browser-profile/` (never committed). The robot never waits for a person: a sign-in that fails makes that source fail and is reported in the run's email. If a site asks for a reCAPTCHA or a manual sign-in, run its extractor by hand (for example `npm run extract:diabolocom`) on this machine and finish in the window: the session is saved for the next runs.
 
 ## Configuration (no secrets)
 
@@ -44,5 +44,6 @@ The first run opens Chrome; sign in if asked. Sessions are kept in each extracto
 - `diabolocom_extraction/config/reports/*.json`: Diabolocom groups, period, columns
 - `grafana_extraction/config/reports/*.json`: Grafana dashboard, panel and row of each KPI
 - `*/config/config.json`: `"headless": true` to run without a visible window
+- `robot/config/robot.json` > `extractorTimeoutMinutes`: an extractor still running after this is stopped and reported as failed
 
 Secrets only go in `.env` files, which are ignored by git.
