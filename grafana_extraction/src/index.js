@@ -6,6 +6,7 @@ import { log } from '@sales-automation/shared/log';
 import { loadConfig, ROOT } from './config.js';
 import { loginGrafana } from './auth.js';
 import { fetchDashboardPanel, readValue, runPanelQuery } from './api.js';
+import { readPanelPercent } from './panel-percent.js';
 
 const USAGE = `Usage: npm start -- [--report <name>]...
   --report <name>   run only this report (repeatable); default: all in config/reports/`;
@@ -27,8 +28,9 @@ async function main() {
   try {
     const page = await loginGrafana(browser, config.grafana);
     for (const report of reports) {
-      const panel = await fetchDashboardPanel(page, report);
-      const value = readValue(await runPanelQuery(page, panel, report.variables), report);
+      const value = report.readMode === 'panel-percent'
+        ? await readPanelPercent(page, config.grafana.baseUrl, report)
+        : readValue(await runPanelQuery(page, await fetchDashboardPanel(page, report), report.variables), report);
       const record = { KPI: report.kpi, Value: value, Date: today(config.grafana.timeZone) };
       const file = await writeReport(path.resolve(ROOT, config.outputDir), report.name, { headers: HEADERS, records: [record] });
       log.info(`report "${report.name}": ${report.kpi} = ${value ?? 'No data'} -> ${file}.{json,csv}`);

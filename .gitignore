@@ -5,3 +5,5 @@ node_modules/
 .browser-profile/
 output/
 *.log
+robot/.execution.lock/
+robot/logs/

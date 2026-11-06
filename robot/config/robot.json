@@ -2,14 +2,12 @@
   "apiUrl": "http://localhost:4100/api",
   "apiKeyEnv": "ROBOT_API_KEY",
   "extractorTimeoutMinutes": 10,
-
   "schedule": {
     "everyMinutes": 120,
     "from": "10:00",
     "to": "20:00",
     "timeZone": "Africa/Tunis"
   },
-
   "jobs": [
     {
       "activity": "telco",
@@ -21,7 +19,10 @@
           "workspace": "sf_extraction",
           "report": "ncc-tunis-daily-sales",
           "fields": {
-            "externalId": ["Opportunity Id", "Nom de l'opportunité"],
+            "externalId": [
+              "Opportunity Id",
+              "Nom de l'opportunité"
+            ],
             "agentName": "ExternalOwnerFullName",
             "opportunityName": "Nom de l'opportunité",
             "phone": "Téléphone",
@@ -48,6 +49,76 @@
           "kind": "kpis",
           "workspace": "grafana_extraction",
           "report": "conquest-box-tr",
+          "fields": {
+            "key": "KPI",
+            "value": "Value",
+            "date": "Date"
+          }
+        },
+        {
+          "name": "grafana-qos",
+          "kind": "kpis",
+          "workspace": "grafana_extraction",
+          "report": "conquest-box-qos",
+          "fields": {
+            "key": "KPI",
+            "value": "Value",
+            "date": "Date"
+          }
+        }
+      ]
+    },
+    {
+      "activity": "conquest-energy",
+      "team": "ncc-energy-conquest",
+      "sources": [
+        {
+          "name": "salesforce",
+          "kind": "sales",
+          "workspace": "sf_extraction",
+          "report": "ncc-tunis-energy-daily-sales",
+          "fields": {
+            "externalId": [
+              "Opportunity Id",
+              "Nom de l'opportunité"
+            ],
+            "agentName": "ExternalOwnerFullName",
+            "opportunityName": "Nom de l'opportunité",
+            "phone": "Téléphone",
+            "recordType": "Type d'enregistrement de l'opportunité",
+            "offer": "Offre choisie : Offer Name",
+            "provider": "Fournisseur",
+            "stage": "Étape",
+            "date": "Date de création"
+          }
+        },
+        {
+          "name": "diabolocom",
+          "kind": "leads",
+          "workspace": "diabolocom_extraction",
+          "report": "ncc-energy-conquest-agent-productivity",
+          "fields": {
+            "agentEmail": "Agent",
+            "leads": "Inbound calls",
+            "date": "Date"
+          }
+        },
+        {
+          "name": "grafana",
+          "kind": "kpis",
+          "workspace": "grafana_extraction",
+          "report": "conquest-energy-tr",
+          "fields": {
+            "key": "KPI",
+            "value": "Value",
+            "date": "Date"
+          }
+        },
+        {
+          "name": "grafana-qos",
+          "kind": "kpis",
+          "workspace": "grafana_extraction",
+          "report": "conquest-energy-qos",
           "fields": {
             "key": "KPI",
             "value": "Value",

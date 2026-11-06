@@ -1,0 +1,10 @@
+{
+  "name": "conquest-energy-qos",
+  "description": "Conquest Energy QoS, NCC - Tunis: final rendered panel 176 filters fr_energy_conquest_1 from mixed-source panel 150 then divides summed Answered by summed Presented. The Energy Global cell is blank; use the actual Energy QoS card.",
+  "kpi": "QOS_GRAFANA",
+  "dashboardUid": "b53de01c-a743-46a7-8517-f4f5730c998f",
+  "panelId": 176,
+  "variables": { "Country_letters": "France", "Country": "fr_", "Site": "NCC - Tunis" },
+  "readMode": "panel-percent",
+  "valueSelector": "[title=\"QoS\"]"
+}

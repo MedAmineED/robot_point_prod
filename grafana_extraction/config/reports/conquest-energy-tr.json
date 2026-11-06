@@ -1,0 +1,10 @@
+{
+  "name": "conquest-energy-tr",
+  "description": "Conquest Energy TR Ops, NCC - Tunis: panel 162 reads table 151 (TR_Site). Global Energy cells are blank on the source dashboard; read the actual site card shown beside Energy QoS.",
+  "kpi": "TR_GRAFANA",
+  "dashboardUid": "b53de01c-a743-46a7-8517-f4f5730c998f",
+  "panelId": 151,
+  "variables": { "Country_letters": "France", "Site": "NCC - Tunis" },
+  "match": { "field": "activity", "value": "Conquest Energy" },
+  "valueField": "tr_ops"
+}

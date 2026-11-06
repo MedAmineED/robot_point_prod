@@ -1,7 +1,7 @@
 {
   "name": "robot-point-prod",
   "private": true,
-  "description": "Point Prod robot: extracts Salesforce sales and Diabolocom leads, then sends them to the Point Prod API",
+  "description": "Point Prod robot: separate Telco and Energy extraction from Salesforce, Diabolocom and Grafana",
   "workspaces": [
     "shared",
     "sf_extraction",
@@ -17,6 +17,8 @@
     "robot": "npm --prefix robot start",
     "robot:push": "npm --prefix robot run push",
     "robot:schedule": "npm --prefix robot run schedule",
-    "test": "npm test --workspaces --if-present"
+    "test": "npm test --workspaces --if-present",
+    "robot:telco": "npm --prefix robot start -- --job telco",
+    "robot:energy": "npm --prefix robot start -- --job conquest-energy"
   }
 }

@@ -1,0 +1,41 @@
+{
+  "name": "ncc-energy-conquest-agent-productivity",
+  "description": "Agents productivity, today, verified group FR_NCC_Energy_Conquest (2796), all group agents.",
+  "apiPath": "/api/statistic-cold/report/agent-productivity/",
+  "period": "today",
+  "groups": [
+    "FR_NCC_Energy_Conquest"
+  ],
+  "onlyActive": false,
+  "dateColumn": "Date",
+  "columns": [
+    {
+      "field": "agentName",
+      "header": "Agent"
+    },
+    {
+      "field": "contactsHandled",
+      "header": "Interactions handled"
+    },
+    {
+      "field": "outboundCalls",
+      "header": "Outbound Campaign calls"
+    },
+    {
+      "field": "inboundCalls",
+      "header": "Inbound calls"
+    },
+    {
+      "field": "freeCalls",
+      "header": "Manual outbound calls"
+    },
+    {
+      "field": "mails",
+      "header": "Mails"
+    },
+    {
+      "field": "outboundMails",
+      "header": "Outbound mails"
+    }
+  ]
+}

@@ -7,6 +7,8 @@ import { log } from '@sales-automation/shared/log';
 import { runExtractor } from './extractor.js';
 import { mapRecords } from './mapping.js';
 import { msUntilNextSlot, slots } from './schedule.js';
+import { selectJobs } from './jobs.js';
+import { withRobotLock } from './lock.js';
 
 const ROBOT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PROJECT_ROOT = path.resolve(ROBOT_ROOT, '..');
@@ -81,14 +83,17 @@ async function runJob(config, job, { skipExtract, trigger }) {
 }
 
 async function runAll(config, jobs, options) {
-  let failures = 0;
-  for (const job of jobs) {
-    await runJob(config, job, options).catch((err) => {
-      failures++;
-      log.error(err.message);
-    });
-  }
-  return failures;
+  log.info(`waiting for shared browser profiles (${jobs.map(job => job.activity).join(', ')})`);
+  return withRobotLock(ROBOT_ROOT, async () => {
+    let failures = 0;
+    for (const job of jobs) {
+      await runJob(config, job, options).catch((err) => {
+        failures++;
+        log.error(err.message);
+      });
+    }
+    return failures;
+  });
 }
 
 async function main() {
@@ -103,8 +108,7 @@ async function main() {
   if (args.help) return console.log(USAGE);
 
   const config = JSON.parse(await readFile(path.join(ROBOT_ROOT, 'config', 'robot.json'), 'utf8'));
-  const jobs = args.job ? config.jobs.filter((j) => args.job.includes(j.activity)) : config.jobs;
-  if (jobs.length === 0) throw new Error(`No matching job. Configured: ${config.jobs.map((j) => j.activity).join(', ')}`);
+  const jobs = selectJobs(config.jobs, args.job);
   const options = { skipExtract: Boolean(args['skip-extract']), trigger: args.schedule ? 'schedule' : 'manual' };
 
   if (!args.schedule) {
