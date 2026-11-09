@@ -1,20 +1,9 @@
 @echo off
-setlocal
-rem Runs one job of robot\config\robot.json and appends its output to robot\logs\<job>.log.
-rem Any job name is accepted: the robot itself rejects a name that is not configured.
-set "ACTIVITY=%~1"
-if "%ACTIVITY%"=="" goto usage
-cd /d "%~dp0..\..\robot"
-if errorlevel 1 exit /b 1
-if not exist "logs" mkdir "logs"
-if not exist "logs" exit /b 1
-set "NODE_EXE=C:\Program Files\nodejs\node.exe"
-if not exist "%NODE_EXE%" (
-  echo Set NODE_EXE to your installed node.exe in run-activity.cmd.
-  exit /b 1
-)
-echo [%date% %time%] Starting %ACTIVITY%>>"logs\%ACTIVITY%.log"
-"%NODE_EXE%" --env-file=.env src/index.js --job "%ACTIVITY%" >>"logs\%ACTIVITY%.log" 2>&1
+rem Runs one job of robot\config\robot.json: run-activity.cmd <job>, for example telco or conquest-energy.
+rem The work is done by run-activity.ps1, which shows the robot's output in this window and appends it
+rem to robot\logs\<job>.log. Any job name is accepted: the robot itself rejects one that is not configured.
+if "%~1"=="" goto usage
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0run-activity.ps1" -Job "%~1"
 exit /b %errorlevel%
 :usage
 echo Usage: run-activity.cmd ^<job^>

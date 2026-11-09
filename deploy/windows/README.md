@@ -6,13 +6,13 @@ After the API/web release and notification migration are explicitly approved, re
 
 Production setup on 6 November 2026: the user explicitly approved the single `Conquest Energy` team with slug `ncc-energy-conquest`. Its first manual run, #61, succeeded and created 27 Energy agents automatically. The configured job already matches that slug. This run used the development workspace; the Windows robot installation and scheduled tasks were not changed.
 
-On the Windows robot, install this version with `npm ci` and preserve `robot\.env`, extractor `.env` files and all `.browser-profile` directories. Configure `CHROME_PATH` for Windows in `robot\.env`, alongside source credentials and the existing API settings. `run-activity.cmd` assumes Node is at `C:\Program Files\nodejs\node.exe`; edit that one path if needed.
+On the Windows robot, install this version with `npm ci` and preserve `robot\.env`, extractor `.env` files and all `.browser-profile` directories. Configure `CHROME_PATH` for Windows in `robot\.env`, alongside source credentials and the existing API settings. `run-activity.cmd` uses the same Node as a terminal (the one on PATH); set the `NODE_EXE` environment variable only to force another one.
 
 **Folders moved (once, when updating to this version).** The extractors now live under `extractors\`: `sf_extraction` → `extractors\salesforce`, `diabolocom_extraction` → `extractors\diabolocom`, `grafana_extraction` → `extractors\grafana` (`sheet_insertion` is gone, `bridge` is now `tools\bridge`). Before the first run, move each old folder's `.env` and `.browser-profile\` into the matching `extractors\<name>\`, then delete the old folders; the saved browser sessions are kept that way, so no new sign-in or verification code is needed. `robot\config\robot.json` already points at the new paths and the robot refuses to start if a `workspace` folder is missing.
 
 ## Launchers
 
-`run-activity.cmd <job>` runs one job of `robot\config\robot.json` (any `activity` name; the robot rejects an unknown one) and logs to `robot\logs\<job>.log`. `run-telco.cmd` and `run-energy.cmd` are one-line wrappers around it. A new activity only needs a new one-line wrapper (`call "%~dp0run-activity.cmd" <job>`) or a task whose arguments call `run-activity.cmd <job>` directly, plus its job in `robot.json`.
+`run-activity.cmd <job>` runs one job of `robot\config\robot.json` (any `activity` name; the robot rejects an unknown one) through `run-activity.ps1`: the robot's output shows live in the task's window and is appended to `robot\logs\<job>.log`, with a start line naming the Node used and a final line with the exit code. `run-telco.cmd` and `run-energy.cmd` are one-line wrappers around it. A new activity only needs a new one-line wrapper (`call "%~dp0run-activity.cmd" <job>`) or a task whose arguments call `run-activity.cmd <job>` directly, plus its job in `robot.json`.
 
 The optional `CHROME_HEADLESS=true` setting runs Chrome without a visible window; `false` explicitly requests a visible window. Omit it to retain the existing Windows browser mode. Test sign-in/VPN access in the chosen mode before changing the task's logon setting.
 
