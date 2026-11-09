@@ -41,3 +41,7 @@ test('schedule slots every 2 hours from 10:00 to 20:00, next slot computed in th
   // 21:00 Tunis -> tomorrow 10:00, 13 hours later
   assert.equal(msUntilNextSlot(schedule, new Date('2026-10-30T20:00:00Z')), 13 * 3_600_000);
 });
+
+test('an unknown source kind is rejected with the list of known kinds', () => {
+  assert.throws(() => mapRecords('calls', [], {}), /Unknown source kind "calls".*sales, leads, kpis/);
+});

@@ -2,10 +2,12 @@
   "name": "@sales-automation/shared",
   "version": "1.0.0",
   "private": true,
-  "description": "Browser, logging, credentials and output helpers shared by the extractors",
+  "description": "Browser, logging, credentials, config and output helpers shared by the extractors and the robot",
   "type": "module",
   "exports": {
     "./browser": "./browser.js",
+    "./cli": "./cli.js",
+    "./config": "./config.js",
     "./env": "./env.js",
     "./log": "./log.js",
     "./output": "./output.js"

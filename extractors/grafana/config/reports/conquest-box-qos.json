@@ -1,0 +1,10 @@
+{
+  "name": "conquest-box-qos",
+  "description": "QoS Global de Conquest Box: panel 171. Grafana filters panel 150 queues by box_conquest, then divides summed Answered by summed Presented. Read the final displayed percent to preserve its multi-source transformations.",
+  "kpi": "QOS_GRAFANA",
+  "dashboardUid": "b53de01c-a743-46a7-8517-f4f5730c998f",
+  "panelId": 171,
+  "variables": { "Country_letters": "France" },
+  "readMode": "panel-percent",
+  "valueSelector": "[title=\"QoS\"]"
+}

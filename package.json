@@ -1,19 +1,19 @@
 {
   "name": "robot-point-prod",
   "private": true,
-  "description": "Point Prod robot: extracts Salesforce sales and Diabolocom leads, then sends them to the Point Prod API",
+  "description": "Point Prod robot: runs the Salesforce, Diabolocom and Grafana extractors per activity and sends their data to the Point Prod API",
   "workspaces": [
     "shared",
-    "sf_extraction",
-    "diabolocom_extraction",
-    "grafana_extraction",
+    "extractors/salesforce",
+    "extractors/diabolocom",
+    "extractors/grafana",
     "robot"
   ],
   "scripts": {
-    "extract": "npm --prefix sf_extraction start",
-    "extract:diabolocom": "npm --prefix diabolocom_extraction start",
-    "extract:grafana": "npm --prefix grafana_extraction start",
-    "extract:all": "npm run extract && npm run extract:diabolocom && npm run extract:grafana",
+    "extract:salesforce": "npm --prefix extractors/salesforce start",
+    "extract:diabolocom": "npm --prefix extractors/diabolocom start",
+    "extract:grafana": "npm --prefix extractors/grafana start",
+    "extract:all": "npm run extract:salesforce && npm run extract:diabolocom && npm run extract:grafana",
     "robot": "npm --prefix robot start",
     "robot:push": "npm --prefix robot run push",
     "robot:schedule": "npm --prefix robot run schedule",

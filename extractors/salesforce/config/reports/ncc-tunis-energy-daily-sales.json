@@ -1,0 +1,35 @@
+{
+  "name": "ncc-tunis-energy-daily-sales",
+  "description": "Ventes du jour Conquest Energy, NCC - Tunis : opportunités énergie et compensation carbone.",
+  "reportId": "00OAM000000L2D32AK",
+  "filters": [
+    {
+      "index": 0,
+      "label": "Equipe",
+      "values": [
+        "Supervision_France",
+        "Conquest"
+      ]
+    },
+    {
+      "index": 1,
+      "label": "Type d'enregistrement de l'opportunité",
+      "values": [
+        "France : Opportunité Energie",
+        "France : Opportunité Compensation Carbone"
+      ]
+    },
+    {
+      "index": 2,
+      "label": "Site d'affectation",
+      "values": [
+        "NCC - Tunis"
+      ]
+    }
+  ],
+  "idColumn": {
+    "column": "OPPORTUNITY_NAME",
+    "header": "Opportunity Id"
+  },
+  "columns": []
+}

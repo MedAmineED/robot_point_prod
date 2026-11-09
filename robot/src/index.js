@@ -5,8 +5,12 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { log } from '@sales-automation/shared/log';
 import { runExtractor } from './extractor.js';
+import { loadRobotConfig } from './config.js';
+import { KINDS, emptyPayloadLists } from './kinds.js';
 import { mapRecords } from './mapping.js';
 import { msUntilNextSlot, slots } from './schedule.js';
+import { selectJobs } from './jobs.js';
+import { withRobotLock } from './lock.js';
 
 const ROBOT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PROJECT_ROOT = path.resolve(ROBOT_ROOT, '..');
@@ -46,7 +50,7 @@ async function runJob(config, job, { skipExtract, trigger }) {
   log.info(`job ${job.activity}: start (${trigger}${skipExtract ? ', existing files' : ''})`);
   const { runId } = await api(config, 'POST', '/ingest/runs', { activity: job.activity, trigger, host: os.hostname() });
 
-  const payload = { activity: job.activity, team: job.team, runId, sources: [], sales: [], leads: [], kpis: [] };
+  const payload = { activity: job.activity, team: job.team, runId, sources: [], ...emptyPayloadLists() };
   for (const source of job.sources) {
     const started = Date.now();
     try {
@@ -55,7 +59,7 @@ async function runJob(config, job, { skipExtract, trigger }) {
         if (error) throw new Error(error);
       }
       const output = await latestOutput(source, skipExtract ? null : started);
-      payload[source.kind].push(...mapRecords(source.kind, output.records, source.fields));
+      payload[KINDS[source.kind].payloadKey].push(...mapRecords(source.kind, output.records, source.fields));
       payload.sources.push({ name: source.name, status: 'success', rows: output.records.length });
       log.info(`job ${job.activity}: ${source.name} OK, ${output.records.length} rows from ${path.relative(PROJECT_ROOT, output.file)}`);
     } catch (err) {
@@ -81,14 +85,17 @@ async function runJob(config, job, { skipExtract, trigger }) {
 }
 
 async function runAll(config, jobs, options) {
-  let failures = 0;
-  for (const job of jobs) {
-    await runJob(config, job, options).catch((err) => {
-      failures++;
-      log.error(err.message);
-    });
-  }
-  return failures;
+  log.info(`waiting for shared browser profiles (${jobs.map(job => job.activity).join(', ')})`);
+  return withRobotLock(ROBOT_ROOT, async () => {
+    let failures = 0;
+    for (const job of jobs) {
+      await runJob(config, job, options).catch((err) => {
+        failures++;
+        log.error(err.message);
+      });
+    }
+    return failures;
+  });
 }
 
 async function main() {
@@ -102,9 +109,8 @@ async function main() {
   });
   if (args.help) return console.log(USAGE);
 
-  const config = JSON.parse(await readFile(path.join(ROBOT_ROOT, 'config', 'robot.json'), 'utf8'));
-  const jobs = args.job ? config.jobs.filter((j) => args.job.includes(j.activity)) : config.jobs;
-  if (jobs.length === 0) throw new Error(`No matching job. Configured: ${config.jobs.map((j) => j.activity).join(', ')}`);
+  const config = await loadRobotConfig(ROBOT_ROOT);
+  const jobs = selectJobs(config.jobs, args.job);
   const options = { skipExtract: Boolean(args['skip-extract']), trigger: args.schedule ? 'schedule' : 'manual' };
 
   if (!args.schedule) {

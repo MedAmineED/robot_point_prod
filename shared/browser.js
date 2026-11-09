@@ -5,11 +5,13 @@ import puppeteer from 'puppeteer-core';
 // A persistent profile (userDataDir, relative to rootDir) keeps sessions between runs,
 // so sign-ins and verification codes are only needed when a site asks again.
 export async function launchBrowser(browserConfig, rootDir) {
+  const mode = process.env.CHROME_HEADLESS;
+  if (mode !== undefined && mode !== 'true' && mode !== 'false') throw new Error('CHROME_HEADLESS must be true or false');
   const userDataDir = path.resolve(rootDir, browserConfig.userDataDir);
   await markCleanExit(userDataDir);
   const browser = await puppeteer.launch({
     executablePath: process.env.CHROME_PATH || browserConfig.executablePath,
-    headless: browserConfig.headless,
+    headless: mode === undefined ? browserConfig.headless : mode === 'true',
     userDataDir,
     defaultViewport: browserConfig.viewport,
     args: ['--lang=fr-FR', '--hide-crash-restore-bubble', '--no-first-run', '--no-default-browser-check'],
