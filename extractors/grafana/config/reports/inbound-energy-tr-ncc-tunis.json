@@ -1,0 +1,10 @@
+{
+  "name": "inbound-energy-tr-ncc-tunis",
+  "description": "BPO - Live TR prospect > INBOUND + Conquest France - NCC Tunis: TR Ops NCC - Tunis of the Inbound Energy row: card panel 79 reads the hidden table panel 151 (TR_Site), row « Inbound Energy » (verified 2026-11-10).",
+  "kpi": "TR_GRAFANA_SITE",
+  "dashboardUid": "b53de01c-a743-46a7-8517-f4f5730c998f",
+  "panelId": 151,
+  "variables": { "Country_letters": "France", "Site": "NCC - Tunis" },
+  "match": { "field": "activity", "value": "Inbound Energy" },
+  "valueField": "tr_ops"
+}

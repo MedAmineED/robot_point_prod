@@ -1,0 +1,42 @@
+{
+  "name": "ncc-tunis-energy-agent-productivity",
+  "description": "Agents productivity, today, groups FR_NCC_Tunis_Energy + FR_NCC_SAVEA (Inbound Energy, IVR1), all group agents.",
+  "apiPath": "/api/statistic-cold/report/agent-productivity/",
+  "period": "today",
+  "groups": [
+    "FR_NCC_Tunis_Energy",
+    "FR_NCC_SAVEA"
+  ],
+  "onlyActive": false,
+  "dateColumn": "Date",
+  "columns": [
+    {
+      "field": "agentName",
+      "header": "Agent"
+    },
+    {
+      "field": "contactsHandled",
+      "header": "Interactions handled"
+    },
+    {
+      "field": "outboundCalls",
+      "header": "Outbound Campaign calls"
+    },
+    {
+      "field": "inboundCalls",
+      "header": "Inbound calls"
+    },
+    {
+      "field": "freeCalls",
+      "header": "Manual outbound calls"
+    },
+    {
+      "field": "mails",
+      "header": "Mails"
+    },
+    {
+      "field": "outboundMails",
+      "header": "Outbound mails"
+    }
+  ]
+}

@@ -12,7 +12,7 @@ On the Windows robot, install this version with `npm ci` and preserve `robot\.en
 
 ## Launchers
 
-`run-activity.cmd <job>` runs one job of `robot\config\robot.json` (any `activity` name; the robot rejects an unknown one) through `run-activity.ps1`: the robot's output shows live in the task's window and is appended to `robot\logs\<job>.log`, with a start line naming the Node used and a final line with the exit code. `run-telco.cmd` and `run-energy.cmd` are one-line wrappers around it. A new activity only needs a new one-line wrapper (`call "%~dp0run-activity.cmd" <job>`) or a task whose arguments call `run-activity.cmd <job>` directly, plus its job in `robot.json`.
+`run-activity.cmd <job>` runs one job of `robot\config\robot.json` (any `activity` name; the robot rejects an unknown one) through `run-activity.ps1`: the robot's output shows live in the task's window and is appended to `robot\logs\<job>.log`, with a start line naming the Node used and a final line with the exit code. `run-telco.cmd`, `run-energy.cmd` and `run-inbound-energy.cmd` are one-line wrappers around it. A new activity only needs a new one-line wrapper (`call "%~dp0run-activity.cmd" <job>`) or a task whose arguments call `run-activity.cmd <job>` directly, plus its job in `robot.json`.
 
 The optional `CHROME_HEADLESS=true` setting runs Chrome without a visible window; `false` explicitly requests a visible window. Omit it to retain the existing Windows browser mode. Test sign-in/VPN access in the chosen mode before changing the task's logon setting.
 
@@ -40,4 +40,7 @@ Direct equivalents from the robot folder:
 ```bat
 node --env-file=.env src/index.js --job telco
 node --env-file=.env src/index.js --job conquest-energy
+node --env-file=.env src/index.js --job inbound-energy
 ```
+
+Inbound Energy (team IVR1) is a third task built the same way: name `Point Prod - Inbound Energy`, arguments `/d /c ""C:\Robots\sales_automation\deploy\windows\run-inbound-energy.cmd""`, log `robot\logs\inbound-energy.log`. Register it first with `npm --prefix api run activity:register -- inbound-energy` and check that its `ivr1` team exists.

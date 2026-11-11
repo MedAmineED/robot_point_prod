@@ -1,0 +1,10 @@
+{
+  "name": "inbound-energy-qos-global",
+  "description": "Inbound Energy QoS Global: card panel 91 filters panel 150 queues matching /energy/, then divides summed Answered by summed Presented. Read the final displayed percent to keep its client-side transformations (verified 2026-11-10: 95 %).",
+  "kpi": "QOS_GRAFANA",
+  "dashboardUid": "b53de01c-a743-46a7-8517-f4f5730c998f",
+  "panelId": 91,
+  "variables": { "Country_letters": "France", "Country": "fr_" },
+  "readMode": "panel-percent",
+  "valueSelector": "[title=\"QoS\"]"
+}

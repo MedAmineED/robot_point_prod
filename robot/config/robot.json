@@ -126,6 +126,76 @@
           }
         }
       ]
+    },
+    {
+      "activity": "inbound-energy",
+      "team": "amine",
+      "sources": [
+        {
+          "name": "salesforce",
+          "kind": "sales",
+          "workspace": "extractors/salesforce",
+          "report": "ncc-tunis-inbound-energy-daily-sales",
+          "fields": {
+            "externalId": [
+              "Opportunity Id",
+              "Nom de l'opportunité"
+            ],
+            "agentName": "ExternalOwnerFullName",
+            "opportunityName": "Nom de l'opportunité",
+            "phone": "Téléphone",
+            "recordType": "Type d'enregistrement de l'opportunité",
+            "offer": "Offre choisie : Offer Name",
+            "provider": "Fournisseur",
+            "stage": "Étape",
+            "date": "Date de création"
+          }
+        },
+        {
+          "name": "diabolocom",
+          "kind": "leads",
+          "workspace": "extractors/diabolocom",
+          "report": "ncc-tunis-energy-agent-productivity",
+          "fields": {
+            "agentEmail": "Agent",
+            "leads": "Inbound calls",
+            "date": "Date"
+          }
+        },
+        {
+          "name": "grafana",
+          "kind": "kpis",
+          "workspace": "extractors/grafana",
+          "report": "inbound-energy-tr-global",
+          "fields": {
+            "key": "KPI",
+            "value": "Value",
+            "date": "Date"
+          }
+        },
+        {
+          "name": "grafana-tr-site",
+          "kind": "kpis",
+          "workspace": "extractors/grafana",
+          "report": "inbound-energy-tr-ncc-tunis",
+          "fields": {
+            "key": "KPI",
+            "value": "Value",
+            "date": "Date"
+          }
+        },
+        {
+          "name": "grafana-qos",
+          "kind": "kpis",
+          "workspace": "extractors/grafana",
+          "report": "inbound-energy-qos-global",
+          "fields": {
+            "key": "KPI",
+            "value": "Value",
+            "date": "Date"
+          }
+        }
+      ]
     }
   ]
 }

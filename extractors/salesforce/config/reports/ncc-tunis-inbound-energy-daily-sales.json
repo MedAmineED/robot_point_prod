@@ -1,0 +1,37 @@
+{
+  "name": "ncc-tunis-inbound-energy-daily-sales",
+  "description": "Ventes du jour Inbound Energy, équipe IVR1, NCC - Tunis : énergie, assurance affinitaire, maintenance habitation, compensation carbone, thermostat. Validation du contrat (filtre 3) garde la valeur du rapport : COMPLETED, BRUT, NET.",
+  "reportId": "00OAM000000L2D32AK",
+  "filters": [
+    {
+      "index": 0,
+      "label": "Equipe",
+      "values": [
+        "IVR1"
+      ]
+    },
+    {
+      "index": 1,
+      "label": "Type d'enregistrement de l'opportunité",
+      "values": [
+        "France : Opportunité Energie",
+        "France : Opportunité Assurance Affinitaire",
+        "France : Opportunité Maintenance Habitation",
+        "France : Opportunité Compensation Carbone",
+        "France : Opportunité Thermostat"
+      ]
+    },
+    {
+      "index": 2,
+      "label": "Site d'affectation",
+      "values": [
+        "NCC - Tunis"
+      ]
+    }
+  ],
+  "idColumn": {
+    "column": "OPPORTUNITY_NAME",
+    "header": "Opportunity Id"
+  },
+  "columns": []
+}
