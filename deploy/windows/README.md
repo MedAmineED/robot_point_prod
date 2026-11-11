@@ -43,4 +43,4 @@ node --env-file=.env src/index.js --job conquest-energy
 node --env-file=.env src/index.js --job inbound-energy
 ```
 
-Inbound Energy (team IVR1) is a third task built the same way: name `Point Prod - Inbound Energy`, arguments `/d /c ""C:\Robots\sales_automation\deploy\windows\run-inbound-energy.cmd""`, log `robot\logs\inbound-energy.log`. Register it first with `npm --prefix api run activity:register -- inbound-energy` and check that its `ivr1` team exists.
+Inbound Energy (team IVR1) is a third task built the same way: name `Point Prod - Inbound Energy`, arguments `/d /c ""C:\Robots\sales_automation\deploy\windows\run-inbound-energy.cmd""`, log `robot\logs\inbound-energy.log`. The activity and its teams `amine` / `hamza` are registered on production (11 November); the job's default team for people not in the roster is `amine`.
